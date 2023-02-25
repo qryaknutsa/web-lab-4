@@ -1,5 +1,6 @@
 package com.example.weblab4.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.Column;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -28,5 +29,6 @@ public class Point {
     //login
 
     @Column(updatable = false, name = "creation_date")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime creationDate;
 }

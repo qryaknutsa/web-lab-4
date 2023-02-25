@@ -31,13 +31,33 @@ public class PointController {
 
     @PostMapping
     public Point create(@RequestBody Point point){
+        double currentTime = System.nanoTime();
+
         point.setCreationDate(LocalDateTime.now());
+        point.setResult(checkArea(point));
+        point.setTime((System.nanoTime() - currentTime) / 1e6);
         return pointRepo.save(point);
     }
-
-    @DeleteMapping("{id}")
-    public void delete(@PathVariable("id") Point point){
-        pointRepo.delete(point);
+    @DeleteMapping()
+    public void delete(){
+        pointRepo.deleteAll();
     }
+
+
+
+
+    public boolean checkArea(Point point){
+        if(point.getX() >= 0 && point.getY() >= 0){
+            return point.getX() <= point.getR() && point.getY() <= point.getR() / 2;
+        }
+        else if(point.getX() <= 0 && point.getY() >= 0){
+            return point.getX()*point.getX() + point.getY()*point.getY() <= point.getR()*point.getR();
+        }
+        else if(point.getX() >= 0 && point.getY() <= 0){
+            return point.getY() >= 2*point.getX() - point.getR();
+        }
+        else return false;
+    }
+
 
 }

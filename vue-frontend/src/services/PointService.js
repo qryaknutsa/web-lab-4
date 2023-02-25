@@ -14,6 +14,10 @@ class PointService {
             r: parseFloat(r)
         });
     }
+
+    deleteTable(){
+        return axios.delete(POINT_API_BASE_URL);
+    }
 }
 
 

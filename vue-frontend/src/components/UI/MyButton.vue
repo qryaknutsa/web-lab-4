@@ -12,7 +12,6 @@ export default {
 
 <style scoped>
 .btn{
-  font-family: 'Book antiqua',sans-serif;
   text-align: center;
   width: 170px;
   height: 30px;
