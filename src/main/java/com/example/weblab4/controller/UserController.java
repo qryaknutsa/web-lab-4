@@ -44,6 +44,7 @@ public class UserController {
             toSend = "Пользователь с таким логином уже существует.";
         } catch (NoSuchElementException e) {
             myUser.setPassword(encryptPassword(myUser.getPassword()));
+            myUserRepo.save(myUser);
             toSend = "Вы успешно зарегистрированы. Войдите в свой аккаунт.";
         }
         return toSend;
