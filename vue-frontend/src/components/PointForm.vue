@@ -20,7 +20,7 @@
       <label>Y ∈ [-5, 3]</label>
       <br/>
       <div id="yInput">
-        <input type="number" class="y" placeholder="Введите значение Y" v-model="y" @input="replaceValue"/>
+        <input type="text" class="y" placeholder="Введите значение Y" v-model="y" @input="replaceValue"/>
       </div>
 
       <br/>
@@ -76,6 +76,7 @@ export default {
   },
   methods: {
     send: function () {
+      this.y = this.y.replace(/,/g, '.')
       PointService.setPoint(this.x, this.y, this.r).then(result => {
         console.log("at send: emit")
         this.$emit('addResult', result.data)
@@ -83,8 +84,6 @@ export default {
         console.log("at send: ERROR")
       }
     },
-
-
 
     processGraphClick: function (e) {
       let values = this.processClick(e, this.r)
@@ -97,23 +96,29 @@ export default {
       }
     },
     changeR: function (e) {
-      if (e.target.value <= 0) this.errorR = 'Некорректное значение R! Выберите R > 0'
+      if (e.target.value <= 0) this.errorR = 'Некорректное значение R. Выберите R > 0'
       else {
         // this.draw(e.target.value);
         this.errorR = '';
         this.restoreCanvas(this.r, false);
       }
     },
+    changeY: function (e){
+      e.target.value = e.target.value.replace(/[^0-9.,-]/g, '');
+    },
     validate: function () {
       let isYCorrect = this.checkValue(this.y, this.y_min, this.y_max, false);
       let isRCorrect = this.checkValue(this.r, 1, 3, true);
-      this.errorY = (isYCorrect ? '' : 'Некорректное значение Y!');
-      this.errorR = (isRCorrect ? '' : 'Некорректное значение R! Выберите R > 0');
+      this.errorY = (isYCorrect ? '' : 'Некорректное значение Y.');
+      this.errorR = (isRCorrect ? '' : 'Некорректное значение R. Выберите R > 0');
       if (isYCorrect && isRCorrect) this.send();
     },
     replaceValue: function (e) {
       e.target.value = e.target.value.replace(/[^0-9.,-]/g, '');
     },
+    onDelete: function (){
+      this.restoreCanvas(this.r, false);
+    }
   }
 }
 </script>

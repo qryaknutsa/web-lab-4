@@ -10,7 +10,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("api/point")
-@CrossOrigin(origins = "http://localhost:8081")
+@CrossOrigin
 public class PointController {
     private final PointRepo pointRepo;
 
@@ -42,8 +42,6 @@ public class PointController {
     public void delete(){
         pointRepo.deleteAll();
     }
-
-
 
 
     public boolean checkArea(Point point){

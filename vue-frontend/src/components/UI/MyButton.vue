@@ -13,16 +13,16 @@ export default {
 <style scoped>
 .btn{
   text-align: center;
-  width: 170px;
-  height: 30px;
+  min-width: 170px;
+  min-height: 30px;
   background: rgba(110,63,26,0.57);
   transition: 0.3s;
 }
 
 .btn:hover{
   text-align: center;
-  width: 175px;
-  height: 35px;
+  min-width: 175px;
+  min-height: 35px;
   background: rgba(110,63,26,0.78);
   transition: 0.3s;
 }

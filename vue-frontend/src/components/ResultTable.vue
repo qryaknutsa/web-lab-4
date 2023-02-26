@@ -1,7 +1,9 @@
 <template>
   <div>
-    <point-form :points="points" @addResult="addRow"/>
+    <point-form :points="points" @addResult="addRow" ref="pointForm"/>
     <my-button @click="deleteTable">Очистить таблицу</my-button>
+    <br/><br/>
+    <my-button @click="toAuth">Назад</my-button>
     <br/><br/>
     <table>
       <thead>
@@ -34,12 +36,7 @@ import MyButton from '@/components/UI/MyButton'
 export default {
   name: "ResultTable",
   components: {PointForm, MyButton},
-  props: {
-    points: {
-      type: Array,
-      required: true
-    }
-  },
+  props: ['authorized', 'points'],
   methods: {
     getPoints: function () {
       return PointService.getPoints().then((response) => {
@@ -47,14 +44,15 @@ export default {
       });
     },
     addRow: function (point) {
-
       this.points.unshift(point)
     },
-
+    toAuth: function (){
+      this.$emit('switchAuth', false)
+    },
     deleteTable: function (){
       PointService.deleteTable().then(() => {
         while(this.points.length > 0) this.points.pop();
-        this.restoreCanvas(this.$refs.Form.r);
+        this.$refs.pointForm.onDelete()
       })
     }
   },
@@ -66,9 +64,8 @@ export default {
 
 <style scoped>
 table {
+  border-spacing: 10px;
   text-align: center;
-  border-collapse: collapse;
-  border-radius: 50px;
   width: 100%;
   margin: auto;
   border-right: 2px solid rgba(110, 63, 26, 0.57);
