@@ -3,6 +3,7 @@ package com.example.weblab4.controller;
 import com.example.weblab4.entity.Point;
 import com.example.weblab4.repo.PointRepo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
@@ -39,9 +40,10 @@ public class PointController {
         point.setTime((System.nanoTime() - currentTime) / 1e6);
         return pointRepo.save(point);
     }
-    @DeleteMapping()
-    public void delete(){
-        pointRepo.deleteAll();
+    @Transactional
+    @DeleteMapping("/delete/{login}")
+    public void delete(@PathVariable("login") String login){
+        pointRepo.deleteAllByLogin(login);
     }
 
 

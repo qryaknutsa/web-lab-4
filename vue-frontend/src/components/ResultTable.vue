@@ -54,10 +54,12 @@ export default {
       this.$emit('switchAuth', false)
     },
     deleteTable: function () {
-      PointService.deleteTable().then(() => {
+      PointService.deleteTable(this.login).then(() => {
         while (this.points.length > 0) this.points.pop();
         this.$refs.pointForm.onDelete()
-      })
+      },() => {
+        console.log("can't delete...");
+      });
     }
   },
   created() {

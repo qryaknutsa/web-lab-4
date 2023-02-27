@@ -16,8 +16,8 @@ class PointService {
         });
     }
 
-    deleteTable(){
-        return axios.delete(POINT_API_BASE_URL);
+    deleteTable(login){
+        return axios.delete(POINT_API_BASE_URL+"/delete/"+login);
     }
 }
 
