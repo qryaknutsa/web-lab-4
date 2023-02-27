@@ -6,8 +6,8 @@
       <p class="name">Вариант 223.</p>
     </div>
 
-    <div v-if="!this.authorized"><enter-form :authorized="authorized" @switchAuth="switchAuth"/></div>
-    <div v-else-if="this.authorized"><result-table :points="points" @switchAuth="switchAuth"/></div>
+    <div v-if="!this.authorized"><enter-form :authorized="authorized" @switchAuth="switchAuth" @onReg="setLogin"/></div>
+    <div v-else-if="this.authorized"><result-table :points="points" :login="login" @switchAuth="switchAuth"/></div>
   </div>
 </template>
 
@@ -23,12 +23,16 @@ export default {
   data: function () {
     return {
       points: [],
-      authorized: false
+      authorized: false,
+      login: ''
     }
   },
   methods: {
     switchAuth: function (bool){
       this.authorized = bool
+    },
+    setLogin: function (login){
+      this.login = login
     }
   }
 }

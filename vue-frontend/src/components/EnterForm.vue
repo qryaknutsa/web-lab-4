@@ -141,6 +141,7 @@ export default {
           } else {
             this.message = ""
             this.$emit('switchAuth', true)
+            this.$emit('onReg', this.login)
           }
         })
       }

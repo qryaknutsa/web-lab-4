@@ -1,6 +1,6 @@
 <template>
   <div>
-    <point-form :points="points" @addResult="addRow" ref="pointForm"/>
+    <point-form :points="points" @addResult="addRow" ref="pointForm" :login="login"/>
     <my-button @click="deleteTable">Очистить таблицу</my-button>
     <br/><br/>
     <my-button @click="toAuth">Назад</my-button>
@@ -36,22 +36,26 @@ import MyButton from '@/components/UI/MyButton'
 export default {
   name: "ResultTable",
   components: {PointForm, MyButton},
-  props: ['authorized', 'points'],
+  props: ['authorized', 'points', 'login'],
   methods: {
     getPoints: function () {
-      return PointService.getPoints().then((response) => {
+      return PointService.getPoints(this.login).then((response) => {
+        console.log(this.login)
+        console.log(response.data)
         response.data.forEach(point => this.points.unshift(point));
+      }, () => {
+        console.log("can't get points...");
       });
     },
     addRow: function (point) {
       this.points.unshift(point)
     },
-    toAuth: function (){
+    toAuth: function () {
       this.$emit('switchAuth', false)
     },
-    deleteTable: function (){
+    deleteTable: function () {
       PointService.deleteTable().then(() => {
-        while(this.points.length > 0) this.points.pop();
+        while (this.points.length > 0) this.points.pop();
         this.$refs.pointForm.onDelete()
       })
     }

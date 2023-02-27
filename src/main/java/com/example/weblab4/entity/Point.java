@@ -26,7 +26,7 @@ public class Point {
     private double r;
     private double time;
     private boolean result;
-    //login
+    private String login;
 
     @Column(updatable = false, name = "creation_date")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")

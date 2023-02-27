@@ -56,7 +56,7 @@ import drawer from '@/js/drawer'
 export default {
   name: "PointForm",
   components: {MyButton},
-  props: ['points'],
+  props: ['points', 'login'],
   mixins: [drawer],
   data: function () {
     return {
@@ -77,7 +77,7 @@ export default {
   methods: {
     send: function () {
       this.y = this.y.replace(/,/g, '.')
-      PointService.setPoint(this.x, this.y, this.r).then(result => {
+      PointService.setPoint(this.x, this.y, this.r, this.login).then(result => {
         console.log("at send: emit")
         this.$emit('addResult', result.data)
       }), () => {
@@ -102,9 +102,6 @@ export default {
         this.errorR = '';
         this.restoreCanvas(this.r, false);
       }
-    },
-    changeY: function (e){
-      e.target.value = e.target.value.replace(/[^0-9.,-]/g, '');
     },
     validate: function () {
       let isYCorrect = this.checkValue(this.y, this.y_min, this.y_max, false);

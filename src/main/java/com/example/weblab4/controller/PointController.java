@@ -19,20 +19,21 @@ public class PointController {
         this.pointRepo = pointRepo;
     }
 
-    @GetMapping
-    public List<Point> list(){
-        return pointRepo.findAll();
+//    @GetMapping
+//    public List<Point> list(){
+//        return pointRepo.findAll();
+//    }
+    @GetMapping("{login}")
+    public List<Point> findByLogin(@PathVariable("login") String login){
+        return pointRepo.findByLogin(login);
     }
 
-    @GetMapping("{id}")
-    public Point getOne(@PathVariable("id") Point point){
-        return point;
-    }
 
     @PostMapping
     public Point create(@RequestBody Point point){
         double currentTime = System.nanoTime();
 
+        System.out.println(point.getLogin());
         point.setCreationDate(LocalDateTime.now());
         point.setResult(checkArea(point));
         point.setTime((System.nanoTime() - currentTime) / 1e6);
